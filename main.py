@@ -1,4 +1,3 @@
-from traceback import print_tb
 from docx import Document
 import pandas as pd
 
@@ -6,14 +5,16 @@ def filter_df (df):
 
     df.columns = [''] * len(df.columns)
     colums_list = df.iloc[[2]].values.tolist()[0]
-    df.columns  = [value.replace(' ','').lower() for value in colums_list] #set colims
-    df = df.drop([0, 1, 2])#eliminate 2 firts rows that creates probelms ans the 3 with the colums names
-    return df
+    df.columns  = [value.replace(' ','').lower() for value in colums_list] #set colums
+
+    df = df[(df.iloc[:, 0] == df.iloc[:, 0])] #eliminate the nan
+    df = df.drop([2]) #eliminate row with colums names
+    return df 
 
 def run():
     df = pd.read_excel('exel/certifications_test.xlsx')
     df = filter_df(df)
-    
+
     df = df.rename(columns={'nonbre':'name','cedula':'id'})
 
     for index,row in df.iterrows():
