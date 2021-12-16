@@ -56,6 +56,7 @@ def generate_imput():
 
 def run():
     try:
+        1/0
         generate_imput()
     except Exception as error:
         error_read = input('error desconocido quieres ver el traceback(y): ')
